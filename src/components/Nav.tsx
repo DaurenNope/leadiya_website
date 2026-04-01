@@ -4,8 +4,8 @@ import '../styles/nav.css'
 const Logo = () => (
   <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
     <rect width="32" height="32" rx="8" fill="#0A0A0B"/>
-    <path d="M9 12L16 8L23 12V20L16 24L9 20V12Z" stroke="var(--accent)" stroke-width="2" stroke-linejoin="round" fill="none"/>
-    <circle cx="16" cy="16" r="2" fill="var(--accent)"/>
+    <path d="M9 9L16 5L23 9V23L16 27L9 23V9Z" stroke="white" stroke-width="1.5" stroke-linejoin="round" fill="none" stroke-opacity="0.3"/>
+    <circle cx="16" cy="16" r="2" fill="white" fill-opacity="0.8"/>
   </svg>
 )
 
