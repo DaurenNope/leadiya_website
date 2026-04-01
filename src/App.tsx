@@ -1,12 +1,10 @@
 import { useEffect, useState } from 'react'
 import Nav from './components/Nav'
 import Hero from './components/Hero'
-import WhoFor from './components/WhoFor'
-import Story from './components/Story'
-import Testimonials from './components/Testimonials'
+import About from './components/About'
+import Features from './components/Features'
 import Integrations from './components/Integrations'
 import HowItWorks from './components/HowItWorks'
-import Features from './components/Features'
 import Pricing from './components/Pricing'
 import FAQ from './components/FAQ'
 import Footer from './components/Footer'
@@ -27,12 +25,10 @@ export default function App() {
       <Nav />
       <main>
         <Hero scrollY={scrollY} />
-        <WhoFor scrollY={scrollY} />
-        <Story scrollY={scrollY} />
-        <Testimonials scrollY={scrollY} />
+        <About scrollY={scrollY} />
+        <Features scrollY={scrollY} />
         <Integrations scrollY={scrollY} />
         <HowItWorks scrollY={scrollY} />
-        <Features scrollY={scrollY} />
         <Pricing scrollY={scrollY} />
         <FAQ scrollY={scrollY} />
       </main>
