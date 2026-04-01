@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import Nav from './components/Nav'
 import Hero from './components/Hero'
 import WhoFor from './components/WhoFor'
+import Story from './components/Story'
 import Testimonials from './components/Testimonials'
 import Integrations from './components/Integrations'
 import HowItWorks from './components/HowItWorks'
@@ -27,6 +28,7 @@ export default function App() {
       <main>
         <Hero scrollY={scrollY} />
         <WhoFor scrollY={scrollY} />
+        <Story scrollY={scrollY} />
         <Testimonials scrollY={scrollY} />
         <Integrations scrollY={scrollY} />
         <HowItWorks scrollY={scrollY} />

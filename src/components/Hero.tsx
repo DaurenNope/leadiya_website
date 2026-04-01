@@ -54,7 +54,10 @@ export default function Hero() {
       
       <div className="container hero-grid">
         <div className="hero-content">
-          <div className="hero-badge" data-aos="fade-down">Проект Rahmet Labs</div>
+          <div className="hero-badge" data-aos="fade-down">
+            <span className="badge-dot" />
+            Из AI-агента в полноценную платформу
+          </div>
           
           <h1 className="hero-title">
             Находите клиентов,<br/>которые <span className="accent">покупают</span>
