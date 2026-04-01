@@ -68,6 +68,7 @@
 
 @media (max-width: 900px) {
   .int-grid { grid-template-columns: repeat(3, 1fr); }
+  .section-header h2 { font-size: 1.5rem; }
 }
 
 @media (max-width: 600px) {

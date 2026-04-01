@@ -98,4 +98,5 @@
 @media (max-width: 900px) {
   .testimonials-grid { grid-template-columns: 1fr; }
   .stats-bar { flex-direction: column; gap: 1.5rem; }
+  .section-header h2 { font-size: 1.5rem; }
 }

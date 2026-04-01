@@ -12,6 +12,7 @@ const Logo = () => (
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false)
+  const [mobileOpen, setMobileOpen] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20)
@@ -37,6 +38,27 @@ export default function Nav() {
         <div className="nav-actions">
           <a href="mailto:hello@leadiya.kz" className="nav-login">Войти</a>
           <a href="#pricing" className="nav-cta">Попробовать</a>
+        </div>
+
+        <button 
+          className={`nav-hamburger ${mobileOpen ? 'open' : ''}`}
+          onClick={() => setMobileOpen(!mobileOpen)}
+          aria-label="Menu"
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+
+      <div className={`nav-mobile ${mobileOpen ? 'open' : ''}`}>
+        <a href="#features" className="nav-mobile-link" onClick={() => setMobileOpen(false)}>Возможности</a>
+        <a href="#how" className="nav-mobile-link" onClick={() => setMobileOpen(false)}>Как это работает</a>
+        <a href="#pricing" className="nav-mobile-link" onClick={() => setMobileOpen(false)}>Тарифы</a>
+        <a href="#faq" className="nav-mobile-link" onClick={() => setMobileOpen(false)}>FAQ</a>
+        <div className="nav-mobile-actions">
+          <a href="mailto:hello@leadiya.kz" className="nav-mobile-login">Войти</a>
+          <a href="#pricing" className="nav-mobile-cta">Попробовать</a>
         </div>
       </div>
     </nav>

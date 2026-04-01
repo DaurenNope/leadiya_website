@@ -2,6 +2,7 @@
   "name": "leadiya-website",
   "private": true,
   "version": "1.0.0",
+  "description": "B2B lead intelligence platform for Kazakhstan",
   "type": "module",
   "scripts": {
     "dev": "vite",
