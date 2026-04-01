@@ -1,0 +1,1569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leadiya — Kazakhstan Lead Intelligence Platform</title>
+  <meta name="description" content="Collect leads from 2GIS and official KZ sources, enrich them automatically, and work from a unified dashboard.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="Leadiya — Kazakhstan Lead Intelligence Platform">
+  <meta property="og:description" content="Collect leads from 2GIS and official KZ sources, enrich them automatically, and work from a unified dashboard.">
+  <meta property="og:image" content="og-image.svg">
+  <meta property="og:type" content="website">
+  
+  <style>
+    :root {
+      --bg: #0A0A0A;
+      --bg-2: #111111;
+      --bg-3: #161616;
+      --border: #1E1E1E;
+      --border-2: #2A2A2A;
+      --teal: #0D6B5A;
+      --pulse: #00E5A0;
+      --white: #F2F0EB;
+      --muted: #555555;
+      --amber: #F5A623;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    html {
+      scroll-behavior: smooth;
+    }
+    
+    body {
+      font-family: 'Syne', sans-serif;
+      background: var(--bg);
+      color: var(--white);
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+    
+    .mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    
+    /* Section tag */
+    .section-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--teal);
+      margin-bottom: 16px;
+    }
+    
+    /* H1 */
+    h1 {
+      font-size: clamp(48px, 8vw, 72px);
+      font-weight: 800;
+      letter-spacing: -3px;
+      line-height: 0.93;
+    }
+    
+    /* H2 */
+    h2 {
+      font-size: clamp(36px, 6vw, 48px);
+      font-weight: 800;
+      letter-spacing: -2px;
+      line-height: 0.97;
+      margin-bottom: 48px;
+    }
+    
+    /* H3 */
+    h3 {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      margin-bottom: 16px;
+    }
+    
+    /* CTA Button */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--pulse);
+      color: var(--bg);
+      font-size: 18px;
+      font-weight: 700;
+      padding: 16px 44px;
+      border-radius: 4px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 229, 160, 0.25);
+    }
+    
+    .btn-secondary {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.2s;
+    }
+    
+    .btn-secondary:hover {
+      color: var(--white);
+    }
+    
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      padding: 20px 0;
+      transition: all 0.3s ease;
+    }
+    
+    nav.scrolled {
+      background: rgba(10, 10, 10, 0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+    
+    .logo-mark {
+      width: 28px;
+      height: 28px;
+    }
+    
+    .logo-mark svg {
+      width: 100%;
+      height: 100%;
+    }
+    
+    .logo-text {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--white);
+      text-transform: lowercase;
+    }
+    
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+    
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.2s;
+    }
+    
+    .nav-links a:hover {
+      color: var(--white);
+    }
+    
+    .nav-cta {
+      background: var(--pulse);
+      color: var(--bg) !important;
+      font-weight: 700;
+      padding: 10px 22px;
+      border-radius: 4px;
+    }
+    
+    /* Hero */
+    .hero {
+      padding: 140px 0 80px;
+      text-align: center;
+      position: relative;
+    }
+    
+    .hero .section-tag {
+      display: block;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    
+    .hero h1 {
+      max-width: 700px;
+      margin: 0 auto 24px;
+    }
+    
+    .hero-sub {
+      font-size: 18px;
+      color: var(--muted);
+      max-width: 580px;
+      margin: 0 auto 40px;
+    }
+    
+    .hero-ctas {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      margin-bottom: 64px;
+    }
+    
+    .dashboard-mockup {
+      max-width: 1000px;
+      margin: 0 auto;
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transform: perspective(1200px) rotateX(4deg);
+      box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6);
+    }
+    
+    .dashboard-mockup::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 120px;
+      background: linear-gradient(transparent, var(--bg));
+      pointer-events: none;
+    }
+    
+    .dashboard-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 20px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-3);
+    }
+    
+    .dashboard-stats {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--white);
+    }
+    
+    .dashboard-stats span {
+      color: var(--amber);
+    }
+    
+    .dashboard-content {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      min-height: 300px;
+    }
+    
+    .dashboard-sidebar {
+      background: var(--bg-3);
+      padding: 16px;
+      border-right: 1px solid var(--border);
+    }
+    
+    .filter-group {
+      margin-bottom: 16px;
+    }
+    
+    .filter-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    
+    .filter-select {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--white);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 6px 10px;
+      width: 100%;
+    }
+    
+    .dashboard-table {
+      padding: 16px;
+    }
+    
+    .table-header {
+      display: grid;
+      grid-template-columns: 1.8fr 0.8fr 1fr 1fr 0.7fr 0.8fr 0.7fr;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+    
+    .table-row {
+      display: grid;
+      grid-template-columns: 1.8fr 0.8fr 1fr 1fr 0.7fr 0.8fr 0.7fr;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+    }
+    
+    .table-row.hot {
+      background: rgba(245, 166, 35, 0.08);
+    }
+    
+    .table-row.hot .icp-score {
+      color: var(--amber);
+    }
+    
+    .icp-score {
+      color: var(--pulse);
+    }
+    
+    .tender-amount {
+      color: var(--muted);
+    }
+    
+    .update-time {
+      color: var(--muted);
+      font-size: 11px;
+    }
+    
+    /* Logos Strip */
+    .logos-strip {
+      background: var(--bg-2);
+      padding: 28px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    
+    .logos-inner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 48px;
+      flex-wrap: wrap;
+    }
+    
+    .logos-group {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    
+    .logos-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    
+    .logo-item {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      color: var(--muted);
+      opacity: 0.4;
+      transition: opacity 0.2s;
+    }
+    
+    .logo-item:hover {
+      opacity: 1;
+    }
+    
+    .logos-divider {
+      width: 1px;
+      height: 24px;
+      background: var(--border);
+    }
+    
+    /* Problem Section */
+    .problem {
+      padding: 120px 0;
+    }
+    
+    .problem h2 {
+      max-width: 500px;
+    }
+    
+    .problem-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+    }
+    
+    .problem-row {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+    
+    .problem-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--amber);
+    }
+    
+    .problem-text {
+      font-size: 18px;
+      line-height: 1.7;
+      color: var(--white);
+      max-width: 600px;
+    }
+    
+    /* Product Overview */
+    .product {
+      padding: 120px 0;
+    }
+    
+    .product h2 {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+    
+    .product-card {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 32px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    
+    .product-card:hover {
+      border-color: var(--border-2);
+      transform: translateY(-2px);
+    }
+    
+    .product-icon {
+      width: 40px;
+      height: 40px;
+      margin-bottom: 20px;
+      color: var(--pulse);
+    }
+    
+    .product-card h3 {
+      font-size: 20px;
+      margin-bottom: 12px;
+    }
+    
+    .product-card p {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+    
+    /* How It Works */
+    .how-it-works {
+      background: var(--white);
+      color: var(--bg);
+      padding: 120px 0;
+    }
+    
+    .how-it-works .section-tag {
+      color: var(--teal);
+    }
+    
+    .how-it-works h2 {
+      color: var(--bg);
+      max-width: 400px;
+    }
+    
+    .how-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: start;
+    }
+    
+    .flow-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+    
+    .flow-step {
+      display: grid;
+      grid-template-columns: 60px 1fr;
+      gap: 20px;
+    }
+    
+    .step-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--teal);
+    }
+    
+    .step-content h4 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--bg);
+    }
+    
+    .step-content p {
+      font-size: 15px;
+      color: #666;
+      line-height: 1.6;
+    }
+    
+    .pipeline-visual {
+      background: var(--bg);
+      border: 1px solid #222;
+      border-radius: 8px;
+      padding: 24px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    
+    .pipeline-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    .pipeline-dots {
+      display: flex;
+      gap: 6px;
+    }
+    
+    .pipeline-dots span {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    
+    .pipeline-dots span:nth-child(1) { background: #ff5f57; }
+    .pipeline-dots span:nth-child(2) { background: #febc2e; }
+    .pipeline-dots span:nth-child(3) { background: #28c840; }
+    
+    .pipeline-title {
+      font-size: 12px;
+      color: var(--muted);
+    }
+    
+    .pipeline-flow {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    
+    .flow-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+      color: var(--white);
+      padding: 8px 0;
+    }
+    
+    .flow-arrow {
+      color: var(--muted);
+      padding-left: 28px;
+      font-size: 14px;
+    }
+    
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    
+    .status-dot.green { background: var(--pulse); }
+    .status-dot.amber { background: var(--amber); }
+    .status-dot.white { background: rgba(255, 255, 255, 0.25); }
+    
+    .flow-desc {
+      color: var(--muted);
+      margin-left: auto;
+    }
+    
+    /* Features */
+    .features {
+      padding: 120px 0;
+    }
+    
+    .features h2 {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    
+    .feature-card {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 28px;
+    }
+    
+    .feature-card h4 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    
+    .feature-card p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    
+    /* Who It's For */
+    .who-for {
+      padding: 120px 0;
+    }
+    
+    .who-for h2 {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    
+    .who-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    
+    .who-card {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 32px;
+    }
+    
+    .who-card h4 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: var(--pulse);
+    }
+    
+    .who-card p {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    
+    /* Pricing */
+    .pricing {
+      padding: 120px 0;
+    }
+    
+    .pricing h2 {
+      text-align: center;
+    }
+    
+    .pricing-sub {
+      text-align: center;
+      color: var(--muted);
+      font-size: 16px;
+      margin-bottom: 64px;
+    }
+    
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+    
+    .pricing-card {
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 32px;
+      position: relative;
+    }
+    
+    .pricing-card.featured {
+      border-color: var(--teal);
+      background: var(--bg-3);
+    }
+    
+    .pricing-badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--pulse);
+      color: var(--bg);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 6px 16px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+    
+    .pricing-name {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    
+    .pricing-amount {
+      font-size: 36px;
+      font-weight: 800;
+      margin-bottom: 24px;
+    }
+    
+    .pricing-features {
+      list-style: none;
+      margin-bottom: 32px;
+    }
+    
+    .pricing-features li {
+      font-size: 14px;
+      color: var(--muted);
+      padding: 6px 0;
+      padding-left: 20px;
+      position: relative;
+    }
+    
+    .pricing-features li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--pulse);
+    }
+    
+    .pricing-btn {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 14px;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 14px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    
+    .pricing-btn:hover {
+      transform: translateY(-2px);
+    }
+    
+    .pricing-btn.starter {
+      background: var(--bg);
+      border: 1px solid var(--border-2);
+      color: var(--white);
+    }
+    
+    .pricing-btn.growth {
+      background: var(--teal);
+      color: var(--white);
+    }
+    
+    .pricing-btn.agency {
+      background: var(--bg-3);
+      border: 1px solid var(--border-2);
+      color: var(--white);
+    }
+    
+    .pricing-footer {
+      text-align: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+    
+    /* FAQ */
+    .faq {
+      padding: 120px 0;
+    }
+    
+    .faq h2 {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+    
+    .faq-list {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      padding: 24px 0;
+    }
+    
+    .faq-question {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--white);
+    }
+    
+    .faq-answer {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    
+    /* Final CTA */
+    .final-cta {
+      padding: 160px 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .watermark {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: clamp(100px, 20vw, 200px);
+      font-weight: 800;
+      color: var(--white);
+      opacity: 0.03;
+      pointer-events: none;
+      white-space: nowrap;
+      letter-spacing: -8px;
+    }
+    
+    .final-cta h2 {
+      max-width: 500px;
+      margin: 0 auto 24px;
+    }
+    
+    .final-cta-sub {
+      color: var(--muted);
+      font-size: 16px;
+      max-width: 480px;
+      margin: 0 auto 40px;
+      line-height: 1.7;
+    }
+    
+    .final-cta .btn-primary {
+      padding: 20px 56px;
+      font-size: 20px;
+    }
+    
+    /* Footer */
+    footer {
+      padding: 40px 0;
+      border-top: 1px solid var(--border);
+    }
+    
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .footer-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .footer-logo svg {
+      width: 20px;
+      height: 20px;
+    }
+    
+    .footer-logo span {
+      font-size: 16px;
+      font-weight: 700;
+      text-transform: lowercase;
+    }
+    
+    .footer-copy {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    
+    .footer-center a {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    
+    .footer-center a:hover {
+      color: var(--pulse);
+    }
+    
+    .footer-right {
+      display: flex;
+      gap: 24px;
+    }
+    
+    .footer-right a {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    
+    .footer-right a:hover {
+      color: var(--white);
+    }
+    
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .product-grid,
+      .pricing-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .features-grid,
+      .who-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .how-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .problem-row {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .nav-links a:not(.nav-cta) {
+        display: none;
+      }
+      
+      .features-grid,
+      .who-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .hero-ctas {
+        flex-direction: column;
+        gap: 16px;
+      }
+      
+      .dashboard-content {
+        grid-template-columns: 1fr;
+      }
+      
+      .dashboard-sidebar {
+        display: none;
+      }
+      
+      .table-header,
+      .table-row {
+        grid-template-columns: 1.5fr 1fr 0.8fr 0.8fr;
+      }
+      
+      .table-header > *:nth-child(3),
+      .table-row > *:nth-child(3),
+      .table-header > *:nth-child(6),
+      .table-row > *:nth-child(6) {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav id="nav">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="#" class="logo">
+          <div class="logo-mark">
+            <svg viewBox="0 0 32 32" fill="none">
+              <path fill="#00E5A0" d="M8 12 L16 8 L24 12 L24 20 L16 24 L8 20 Z"/>
+              <path fill="#0A0A0A" d="M10 14 L16 11 L22 14 L22 19 L16 22 L10 19 Z"/>
+            </svg>
+          </div>
+          <span class="logo-text">leadiya</span>
+        </a>
+        <div class="nav-links">
+          <a href="#product">Product</a>
+          <a href="#how">Sources</a>
+          <a href="#pricing">Pricing</a>
+          <a href="#cta" class="nav-cta">Get Access</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <span class="section-tag">// Kazakhstan Lead Intelligence Platform</span>
+      <h1>Every KZ business.<br>One dashboard.<br>Always fresh.</h1>
+      <p class="hero-sub">
+        Leadiya collects leads from 2GIS and official KZ government sources, 
+        enriches them automatically with director names, phone numbers, 
+        and procurement signals — and puts them in a dashboard your 
+        whole team can work from.
+      </p>
+      <div class="hero-ctas">
+        <a href="#cta" class="btn-primary">Get Access →</a>
+        <a href="#how" class="btn-secondary">// see how it works</a>
+      </div>
+      
+      <div class="dashboard-mockup">
+        <div class="dashboard-header">
+          <div style="display: flex; gap: 8px;">
+            <span style="width: 10px; height: 10px; border-radius: 50%; background: #ff5f57;"></span>
+            <span style="width: 10px; height: 10px; border-radius: 50%; background: #febc2e;"></span>
+            <span style="width: 10px; height: 10px; border-radius: 50%; background: #28c840;"></span>
+          </div>
+          <span class="dashboard-stats">847 leads · <span>23 hot</span> · Updated 4 min ago</span>
+        </div>
+        <div class="dashboard-content">
+          <div class="dashboard-sidebar">
+            <div class="filter-group">
+              <div class="filter-label">City</div>
+              <div class="filter-select">Almaty, Astana...</div>
+            </div>
+            <div class="filter-group">
+              <div class="filter-label">Industry</div>
+              <div class="filter-select">Construction</div>
+            </div>
+            <div class="filter-group">
+              <div class="filter-label">ICP Score</div>
+              <div class="filter-select">80+</div>
+            </div>
+            <div class="filter-group">
+              <div class="filter-label">Hot Only</div>
+              <div class="filter-select">Off</div>
+            </div>
+          </div>
+          <div class="dashboard-table">
+            <div class="table-header">
+              <span>Company</span>
+              <span>City</span>
+              <span>Director</span>
+              <span>Phone</span>
+              <span>Score</span>
+              <span>Tender</span>
+              <span>Updated</span>
+            </div>
+            <div class="table-row hot">
+              <span>ТОО «АлматыСтрой Плюс»</span>
+              <span>Алматы</span>
+              <span>Сейткали Д.</span>
+              <span>+7 701 ···</span>
+              <span class="icp-score">92</span>
+              <span class="tender-amount" style="color: var(--amber);">₸84.5M</span>
+              <span class="update-time">4m ago</span>
+            </div>
+            <div class="table-row">
+              <span>ТОО «КазМедПрибор»</span>
+              <span>Астана</span>
+              <span>Ахметов Р.</span>
+              <span>+7 702 ···</span>
+              <span class="icp-score">88</span>
+              <span class="tender-amount">—</span>
+              <span class="update-time">12m ago</span>
+            </div>
+            <div class="table-row">
+              <span>ИП Джаксыбеков</span>
+              <span>Шымкент</span>
+              <span>Джаксыбеков</span>
+              <span>+7 705 ···</span>
+              <span class="icp-score">71</span>
+              <span class="tender-amount">—</span>
+              <span class="update-time">1h ago</span>
+            </div>
+            <div class="table-row">
+              <span>ТОО «ЭкоСтрой KZ»</span>
+              <span>Алматы</span>
+              <span>Нурланов К.</span>
+              <span>+7 707 ···</span>
+              <span class="icp-score">85</span>
+              <span class="tender-amount" style="color: var(--amber);">₸12.1M</span>
+              <span class="update-time">2h ago</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Logos Strip -->
+  <section class="logos-strip">
+    <div class="container">
+      <div class="logos-inner">
+        <div class="logos-group">
+          <span class="logos-label">data from</span>
+          <span class="logo-item">data.egov.kz</span>
+          <span class="logo-item">Goszakup</span>
+          <span class="logo-item">stat.gov.kz</span>
+          <span class="logo-item">FA-FA.kz</span>
+          <span class="logo-item">2GIS</span>
+          <span class="logo-item">kgd.gov.kz</span>
+        </div>
+        <div class="logos-divider"></div>
+        <div class="logos-group">
+          <span class="logos-label">connect to</span>
+          <span class="logo-item">Google Sheets</span>
+          <span class="logo-item">Zapier</span>
+          <span class="logo-item">Make</span>
+          <span class="logo-item">Webhook</span>
+          <span class="logo-item">CSV</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- The Problem -->
+  <section class="problem">
+    <div class="container">
+      <span class="section-tag">// why this exists</span>
+      <h2>The KZ lead problem<br>is not finding companies.<br>It's knowing which ones<br>matter right now.</h2>
+      
+      <div class="problem-rows">
+        <div class="problem-row">
+          <span class="problem-label">Stale Data</span>
+          <p class="problem-text">
+            Every "lead provider" in Kazakhstan sells the same 2GIS export from 2022. 
+            Same file. Sold to 50 teams. You're calling numbers your competitors 
+            already called last week.
+          </p>
+        </div>
+        <div class="problem-row">
+          <span class="problem-label">No Signal</span>
+          <p class="problem-text">
+            A company name and phone number tells you nothing. Who is the director? 
+            Did they just win a government contract? Are they active or half-liquidated? 
+            Nobody was answering these questions. Until now.
+          </p>
+        </div>
+        <div class="problem-row">
+          <span class="problem-label">Manual Work</span>
+          <p class="problem-text">
+            Sales teams spend hours on 2GIS copying names into spreadsheets. 
+            No enrichment. No scoring. No way to prioritize. 
+            Just a list and a phone.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Product Overview -->
+  <section class="product" id="product">
+    <div class="container">
+      <span class="section-tag">// the product</span>
+      <h2>Four layers.<br>One platform.</h2>
+      
+      <div class="product-grid">
+        <div class="product-card">
+          <div class="product-icon">
+            <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5">
+              <ellipse cx="20" cy="12" rx="12" ry="6"/>
+              <path d="M8 12v12c0 3.3 5.4 6 12 6s12-2.7 12-6V12"/>
+              <path d="M8 18c0 3.3 5.4 6 12 6s12-2.7 12-6"/>
+            </svg>
+          </div>
+          <h3>Single source of truth</h3>
+          <p>Every KZ lead lives in one Postgres database — enriched, scored, and always up to date. Not a spreadsheet. Not a CSV. A real database your whole team queries.</p>
+        </div>
+        
+        <div class="product-card">
+          <div class="product-icon">
+            <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M10 20h5l3-8 6 16 3-8h5"/>
+              <circle cx="8" cy="20" r="2"/>
+              <circle cx="32" cy="20" r="2"/>
+            </svg>
+          </div>
+          <h3>Automated enrichment</h3>
+          <p>Workers run 24/7 — collecting from data.egov.kz, Goszakup, stat.gov.kz, and 2GIS. When a company wins a tender, it surfaces in your dashboard within hours. No manual updates.</p>
+        </div>
+        
+        <div class="product-card">
+          <div class="product-icon">
+            <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="6" y="6" width="12" height="12" rx="2"/>
+              <rect x="22" y="6" width="12" height="12" rx="2"/>
+              <rect x="6" y="22" width="12" height="12" rx="2"/>
+              <rect x="22" y="22" width="12" height="12" rx="2"/>
+            </svg>
+          </div>
+          <h3>Built to work from</h3>
+          <p>Filter by city, industry, ICP score, and tender activity. Reveal director name and phone with one click. Export or push to outreach directly. Your team lives here.</p>
+        </div>
+        
+        <div class="product-card">
+          <div class="product-icon">
+            <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="6" y="8" width="28" height="20" rx="3"/>
+              <path d="M14 28l-2 6M26 28l2 6"/>
+              <path d="M16 18l3 3 5-6"/>
+            </svg>
+          </div>
+          <h3>Capture in the field</h3>
+          <p>On 2GIS? The extension captures any company into the same database your server runs fill. One rep on 2GIS, one bulk discovery job — same place. Same data.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="how-it-works" id="how">
+    <div class="container">
+      <span class="section-tag">// data flow</span>
+      <div class="how-grid">
+        <div>
+          <h2>From 2GIS listing<br>to qualified lead —<br>automatically.</h2>
+          
+          <div class="flow-steps">
+            <div class="flow-step">
+              <span class="step-number">01</span>
+              <div class="step-content">
+                <h4>Discovery</h4>
+                <p>Server-side workers scrape 2GIS by city and category — or your team triggers a run from the dashboard. Thousands of companies ingested overnight.</p>
+              </div>
+            </div>
+            <div class="flow-step">
+              <span class="step-number">02</span>
+              <div class="step-content">
+                <h4>Official enrichment</h4>
+                <p>Each company is cross-referenced by BIN against data.egov.kz (director, legal status), stat.gov.kz (employees, revenue), and kgd.gov.kz (tax health).</p>
+              </div>
+            </div>
+            <div class="flow-step">
+              <span class="step-number">03</span>
+              <div class="step-content">
+                <h4>Intent signals</h4>
+                <p>Goszakup API checks every BIN for government contract wins. A company that just won ₸50M gets flagged HOT. You see it within 2 hours.</p>
+              </div>
+            </div>
+            <div class="flow-step">
+              <span class="step-number">04</span>
+              <div class="step-content">
+                <h4>ICP scoring</h4>
+                <p>AI scores every lead 0–100 against your ideal customer profile. You filter to 80+ and start calling. No manual qualification.</p>
+              </div>
+            </div>
+            <div class="flow-step">
+              <span class="step-number">05</span>
+              <div class="step-content">
+                <h4>Act</h4>
+                <p>Work leads in the dashboard. Export to CSV. Push to WhatsApp outreach. Or pull via API into your own tools.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="pipeline-visual">
+          <div class="pipeline-header">
+            <div class="pipeline-dots">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <span class="pipeline-title">leadiya workers · live</span>
+          </div>
+          <div class="pipeline-flow">
+            <div class="flow-item">
+              <span class="status-dot green"></span>
+              <span>2GIS discovery</span>
+              <span class="flow-desc">→ 2,847 companies queued</span>
+            </div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-item">
+              <span class="status-dot green"></span>
+              <span>BIN enrichment</span>
+              <span class="flow-desc">→ director + legal status resolved</span>
+            </div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-item">
+              <span class="status-dot amber"></span>
+              <span>Goszakup signal</span>
+              <span class="flow-desc">→ ТОО АлматыСтрой won ₸84.5M</span>
+            </div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-item">
+              <span class="status-dot green"></span>
+              <span>ICP score</span>
+              <span class="flow-desc">→ 92 / 100 · flagged HOT</span>
+            </div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-item">
+              <span class="status-dot white"></span>
+              <span>Dashboard</span>
+              <span class="flow-desc">→ visible in your leads list · 4m ago</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="features">
+    <div class="container">
+      <span class="section-tag">// capabilities</span>
+      <h2>Everything a KZ<br>sales team needs.</h2>
+      
+      <div class="features-grid">
+        <div class="feature-card">
+          <h4>Live database</h4>
+          <p>Leads auto-update. last_enriched_at tracked per company. Stale records re-queued automatically every 7 days.</p>
+        </div>
+        <div class="feature-card">
+          <h4>Director names</h4>
+          <p>From official egov registry — not scraped from a website. The person who signs contracts. By name, from first contact.</p>
+        </div>
+        <div class="feature-card">
+          <h4>Tender signals</h4>
+          <p>Every government procurement win cross-referenced by BIN. Companies with fresh budget surface at the top.</p>
+        </div>
+        <div class="feature-card">
+          <h4>ICP filter</h4>
+          <p>Set your ideal customer profile once. Dashboard filters to your score range. No leads that don't match.</p>
+        </div>
+        <div class="feature-card">
+          <h4>Chrome extension</h4>
+          <p>Reps capture companies from 2GIS directly into the database while browsing. Field capture meets server discovery.</p>
+        </div>
+        <div class="feature-card">
+          <h4>Outreach built in</h4>
+          <p>WhatsApp sequences, reply classification, conversation history — all inside the dashboard. No separate tool.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Who It's For -->
+  <section class="who-for">
+    <div class="container">
+      <span class="section-tag">// who uses it</span>
+      <h2>Built for teams<br>that sell in Kazakhstan.</h2>
+      
+      <div class="who-grid">
+        <div class="who-card">
+          <h4>B2B Sales Teams</h4>
+          <p>You prospect by industry and city. You need director names, not receptionists. You need to know who has budget right now. Leadiya tells you all three before you dial.</p>
+        </div>
+        <div class="who-card">
+          <h4>Agencies & Consultants</h4>
+          <p>You build lead lists for clients. Deliver a live database, not a spreadsheet. Run discovery on demand. White-label the output.</p>
+        </div>
+        <div class="who-card">
+          <h4>Founders & Solo Operators</h4>
+          <p>You built this to sell your own services first. It works. Now others can use the same machine. No enterprise contract. No onboarding call. Just access.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section class="pricing" id="pricing">
+    <div class="container">
+      <span class="section-tag">// pricing</span>
+      <h2>No free tier.<br>Just results.</h2>
+      <p class="pricing-sub">Every plan includes the dashboard, live data, director names, and BIN-verified profiles.</p>
+      
+      <div class="pricing-grid">
+        <div class="pricing-card">
+          <div class="pricing-name">Starter</div>
+          <div class="pricing-amount">₸25,000 <span style="font-size: 14px; color: var(--muted); font-weight: 400;">/ мес</span></div>
+          <ul class="pricing-features">
+            <li>Dashboard access</li>
+            <li>2 cities</li>
+            <li>500 lead views / month</li>
+            <li>2 exports (50 leads each)</li>
+            <li>BIN + director + phone</li>
+            <li>ICP score filter</li>
+            <li>Email support</li>
+          </ul>
+          <button class="pricing-btn starter">Get Starter</button>
+        </div>
+        
+        <div class="pricing-card featured">
+          <div class="pricing-badge">Most popular</div>
+          <div class="pricing-name">Growth</div>
+          <div class="pricing-amount">₸65,000 <span style="font-size: 14px; color: var(--muted); font-weight: 400;">/ мес</span></div>
+          <ul class="pricing-features">
+            <li>Everything in Starter</li>
+            <li>All KZ cities</li>
+            <li>Unlimited lead views</li>
+            <li>10 exports (200 leads each)</li>
+            <li>Goszakup tender signals</li>
+            <li>HOT lead alerts</li>
+            <li>Custom ICP config</li>
+            <li>Website enrichment</li>
+            <li>Chrome extension access</li>
+            <li>WhatsApp outreach (basic)</li>
+            <li>Priority support</li>
+          </ul>
+          <button class="pricing-btn growth">Get Growth</button>
+        </div>
+        
+        <div class="pricing-card">
+          <div class="pricing-name">Agency</div>
+          <div class="pricing-amount">₸150,000 <span style="font-size: 14px; color: var(--muted); font-weight: 400;">/ мес</span></div>
+          <ul class="pricing-features">
+            <li>Everything in Growth</li>
+            <li>5 team seats</li>
+            <li>Unlimited exports</li>
+            <li>Full outreach engine</li>
+            <li>API access</li>
+            <li>White-label option</li>
+            <li>Dedicated support</li>
+          </ul>
+          <button class="pricing-btn agency">Contact Us</button>
+        </div>
+      </div>
+      
+      <p class="pricing-footer">No annual contracts · Cancel anytime · Data live from day one</p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq">
+    <div class="container">
+      <span class="section-tag">// faq</span>
+      <h2>Questions? Answered.</h2>
+      
+      <div class="faq-list">
+        <div class="faq-item">
+          <div class="faq-question">Is this a Chrome extension or a platform?</div>
+          <div class="faq-answer">Platform. Dashboard + API + automated workers + database. The Chrome extension is one way data enters the system — server-side scrapers are the primary scale path.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">Where does the data come from?</div>
+          <div class="faq-answer">Six sources: data.egov.kz (official KZ company registry), Goszakup (government procurement), stat.gov.kz (company stats), kgd.gov.kz (tax status), FA-FA.kz (enrichment), and 2GIS (discovery + phones).</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">How fresh is the data?</div>
+          <div class="faq-answer">Companies are re-enriched every 7 days automatically. Tender signals update every 2 hours. New companies appear within 6 hours of 2GIS listing.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">Can I use it without the Chrome extension?</div>
+          <div class="faq-answer">Yes. The extension is optional. Server-side discovery runs scheduled jobs. Most teams never touch the extension.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">Does it work outside Kazakhstan?</div>
+          <div class="faq-answer">Built and optimized for Kazakhstan. Other 2GIS markets (Russia, Kyrgyzstan, etc.) may work but are not officially supported.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">What about privacy / compliance?</div>
+          <div class="faq-answer">All data sourced from publicly visible listings and official government registries. You're responsible for outreach consent and local privacy laws.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">Can I self-host?</div>
+          <div class="faq-answer">The stack is Hono + Postgres + Redis + Next.js. Contact us for self-hosted options.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="final-cta" id="cta">
+    <div class="watermark">LEADIYA</div>
+    <div class="container">
+      <h2>Your competitors are still<br>cold-calling a 2022 spreadsheet.</h2>
+      <p class="final-cta-sub">
+        While they guess, you know — the director's name, the phone, 
+        and that they won a ₸50M contract three days ago.
+      </p>
+      <a href="#" class="btn-primary">Get Access →</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-left">
+          <div class="footer-logo">
+            <svg viewBox="0 0 32 32" fill="none">
+              <path fill="#00E5A0" d="M8 12 L16 8 L24 12 L24 20 L16 24 L8 20 Z"/>
+              <path fill="#0A0A0A" d="M10 14 L16 11 L22 14 L22 19 L16 22 L10 19 Z"/>
+            </svg>
+            <span>leadiya</span>
+          </div>
+          <span class="footer-copy">© 2025 Leadiya</span>
+        </div>
+        <div class="footer-center">
+          <a href="mailto:hello@leadiya.com">hello@leadiya.com</a>
+        </div>
+        <div class="footer-right">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Navigation scroll effect
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    });
+  </script>
+</body>
+</html>

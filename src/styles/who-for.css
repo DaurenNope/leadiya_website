@@ -1,0 +1,55 @@
+.who-for { background: var(--bg-2); }
+
+.section-header { margin-bottom: 2.5rem; opacity: 0; transform: translateY(20px); transition: all 0.6s ease; }
+.section-header.visible { opacity: 1; transform: translateY(0); }
+.section-header h2 { font-size: 2rem; }
+
+.who-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+.who-card {
+  background: var(--bg-3);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.who-card.visible { opacity: 1; transform: translateY(0); }
+
+.who-card:hover { 
+  border-color: var(--accent); 
+  transform: translateY(-4px);
+}
+
+.who-percent {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--accent);
+  background: rgba(0, 212, 170, 0.1);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.who-card h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.who-card p {
+  font-size: 0.9rem;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .who-grid { grid-template-columns: 1fr; }
+}
