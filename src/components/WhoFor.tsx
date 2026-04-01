@@ -14,42 +14,35 @@ const WhoFor = ({ scrollY = 0 }: { scrollY?: number }) => {
     }
   }, [scrollY])
 
-  const roles = [
-    {
-      title: 'B2B продажи',
-      desc: 'Менеджеры и отделы продаж, которые ищут новых клиентов в Казахстане',
-      stats: '67% клиентов'
-    },
-    {
-      title: 'Агентства',
-      desc: 'Маркетинговые и продающие агентства для клиентов из РК',
-      stats: '23% клиентов'
-    },
-    {
-      title: 'Фрилансеры',
-      desc: 'Бизнес-консультанты, рекрутеры, b2b продавцы',
-      stats: '10% клиентов'
-    }
-  ]
-
   return (
     <section className="who-for" id="who" ref={sectionRef}>
+      <div className="who-for-bg" />
       <div className="container">
         <div className={`section-header ${visible ? 'visible' : ''}`}>
           <span className="section-tag">// Для кого</span>
-          <h2>Кому подходит платформа</h2>
+          <h2>Кому подходит Leadiya</h2>
         </div>
         
-        <div className="who-grid">
-          {roles.map((role, i) => (
+        <div className="who-timeline">
+          <div className="who-line" />
+          {[
+            { title: 'B2B продажи', desc: 'Отделы продаж и менеджеры, которым нужны проверенные лиды в Казахстане', pct: '67%' },
+            { title: 'Агентства', desc: 'Маркетинговые и sales-агентства с клиентами из РК', pct: '23%' },
+            { title: 'Фрилансеры', desc: 'Бизнес-консультанты, рекрутеры и B2B продавцы', pct: '10%' }
+          ].map((role, i) => (
             <div 
               key={i} 
-              className={`who-card ${visible ? 'visible' : ''}`}
-              style={{ transitionDelay: `${i * 0.1}s` }}
+              className={`who-item ${visible ? 'visible' : ''}`}
+              style={{ transitionDelay: `${i * 0.15}s` }}
             >
-              <span className="who-percent">{role.stats}</span>
-              <h3>{role.title}</h3>
-              <p>{role.desc}</p>
+              <div className="who-item-dot">
+                <span className="who-item-num">{String(i + 1).padStart(2, '0')}</span>
+              </div>
+              <div className="who-item-content">
+                <span className="who-item-pct">{role.pct}</span>
+                <h3>{role.title}</h3>
+                <p>{role.desc}</p>
+              </div>
             </div>
           ))}
         </div>

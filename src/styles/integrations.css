@@ -1,21 +1,128 @@
-.integrations {}
+.integrations {
+  padding: 6rem 0;
+}
 
-.section-header { margin-bottom: 2.5rem; opacity: 0; transform: translateY(20px); transition: all 0.6s ease; }
+.section-header { margin-bottom: 3rem; opacity: 0; transform: translateY(20px); transition: all 0.6s ease; }
 .section-header.visible { opacity: 1; transform: translateY(0); }
-.section-header h2 { font-size: 2rem; }
+.section-header h2 { font-size: 2.5rem; }
+
+.int-showcase {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  margin-bottom: 2rem;
+  align-items: center;
+}
+
+.int-main {
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: all 0.6s ease;
+}
+
+.int-main.visible { opacity: 1; transform: translateX(0); }
+
+.int-visual {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.int-visual-header {
+  background: var(--bg-3);
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.8rem;
+  color: var(--text-2);
+}
+
+.int-dots { display: flex; gap: 6px; }
+.int-dots span { width: 10px; height: 10px; border-radius: 50%; background: var(--bg-4); }
+
+.int-visual-body {
+  padding: 2rem;
+}
+
+.int-connection {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.int-connector {
+  flex: 1;
+  background: var(--bg-3);
+  border-radius: 12px;
+  padding: 1.25rem;
+}
+
+.int-connector.from {
+  border: 1px solid var(--border);
+}
+
+.int-connector.to {
+  border: 1px solid var(--accent);
+  background: rgba(0, 212, 170, 0.05);
+}
+
+.int-label {
+  display: block;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  color: var(--text-4);
+  margin-bottom: 0.75rem;
+  letter-spacing: 0.05em;
+}
+
+.int-data {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  color: var(--text-2);
+}
+
+.int-data.success {
+  color: var(--accent);
+}
+
+.int-data .check {
+  font-size: 1.25rem;
+}
+
+.int-arrow {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  background: var(--accent);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
 
 .int-grid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
-  margin-bottom: 1.5rem;
 }
 
 .int-card {
   background: var(--bg-2);
   border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 1.5rem 1rem;
+  border-radius: 16px;
+  padding: 1.5rem;
   text-align: center;
   transition: all 0.3s ease;
   opacity: 0;
@@ -23,16 +130,18 @@
 }
 
 .int-card.visible { opacity: 1; transform: translateY(0); }
-.int-card:hover { 
-  border-color: var(--accent); 
-  transform: translateY(-4px);
+
+.int-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-8px);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.2);
 }
 
 .int-icon {
-  width: 48px;
-  height: 48px;
+  width: 56px;
+  height: 56px;
   background: var(--bg-3);
-  border-radius: 10px;
+  border-radius: 14px;
   margin: 0 auto 1rem;
   display: flex;
   align-items: center;
@@ -43,11 +152,12 @@
 
 .int-card:hover .int-icon {
   background: rgba(0, 212, 170, 0.15);
+  transform: scale(1.1);
 }
 
 .int-card h3 {
-  font-size: 0.95rem;
-  margin-bottom: 0.25rem;
+  font-size: 1rem;
+  margin-bottom: 0.375rem;
 }
 
 .int-card p {
@@ -57,7 +167,7 @@
 
 .int-note {
   text-align: center;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   color: var(--text-3);
   opacity: 0;
   transform: translateY(10px);
@@ -67,10 +177,8 @@
 .int-note.visible { opacity: 1; transform: translateY(0); }
 
 @media (max-width: 900px) {
-  .int-grid { grid-template-columns: repeat(3, 1fr); }
-  .section-header h2 { font-size: 1.5rem; }
-}
-
-@media (max-width: 600px) {
+  .int-showcase { grid-template-columns: 1fr; }
+  .int-main { display: none; }
   .int-grid { grid-template-columns: repeat(2, 1fr); }
+  .section-header h2 { font-size: 1.75rem; }
 }
